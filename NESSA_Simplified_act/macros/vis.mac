@@ -1,0 +1,47 @@
+#============================================================================
+# vis.mac
+# Visualization macro for NESSA neutron beamline
+# Shows the bunker geometry with detector positions highlighted in red
+#============================================================================
+
+# Use OpenGL for interactive viewing
+/vis/open OGL 800x600-0+0
+
+# Draw geometry
+/vis/drawVolume
+
+# Specify view angle (top-down to see bunker layout)
+/vis/viewer/set/viewpointThetaPhi 90. 0.
+/vis/viewer/set/upVector 0 1 0
+
+# Set style
+/vis/viewer/set/style wireframe
+/vis/viewer/set/auxiliaryEdge true
+/vis/viewer/set/lineSegmentsPerCircle 100
+
+# Draw coordinate axes (50 cm length)
+/vis/scene/add/axes 0 0 0 50 cm
+
+# Set background colour
+/vis/viewer/set/background white
+
+# Draw smooth trajectories
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/set neutron blue
+/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+/vis/modeling/trajectories/drawByParticleID-0/set e- red
+
+# Accumulate events
+/vis/scene/endOfEventAction accumulate 20
+
+# Auto-refresh
+/vis/viewer/set/autoRefresh true
+
+# Reset to show whole geometry
+/vis/viewer/flush
+
+# Switch to a plan view (XY plane) to see the beamline layout
+# This matches the PHITS 2D flux map view
+/vis/viewer/set/viewpointThetaPhi 0 0
+/vis/viewer/zoom 1.5

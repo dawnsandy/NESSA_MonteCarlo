@@ -1,0 +1,94 @@
+#============================================================================
+# vis_raytracer.mac
+# High-quality ray-traced visualization for presentations
+# Shows neutron beam distribution through the NESSA beamline
+#
+# Usage:
+#   ./nessa_sim
+#   /control/execute macros/vis_raytracer.mac
+#
+# Or from batch:
+#   ./nessa_sim macros/vis_raytracer.mac
+#============================================================================
+
+# --- Initialize ---
+/run/initialize
+/control/execute macros/gps_source.mac
+
+#============================================================================
+# METHOD 1: OpenGL with trajectory accumulation (interactive, good for talks)
+#============================================================================
+/vis/open OGL 1280x960
+
+# Clean white background
+/vis/viewer/set/background white
+
+# Style: transparent surfaces so you can see inside
+/vis/viewer/set/style surface
+/vis/viewer/set/hiddenMarker true
+/vis/viewer/set/auxiliaryEdge true
+
+# --- Top-down view (beamline layout) ---
+/vis/viewer/set/viewpointThetaPhi 0 0
+/vis/viewer/zoom 1.5
+
+# Draw trajectories colored by particle type
+/vis/scene/add/trajectories smooth rich
+/vis/modeling/trajectories/create/drawByParticleID NeutronTracks
+/vis/modeling/trajectories/NeutronTracks/default/setDrawStepPts true
+/vis/modeling/trajectories/NeutronTracks/default/setStepPtsSize 1
+
+# Neutrons: blue, gammas: green, electrons: red
+/vis/modeling/trajectories/NeutronTracks/set neutron blue
+/vis/modeling/trajectories/NeutronTracks/set gamma green
+/vis/modeling/trajectories/NeutronTracks/set e- red
+/vis/modeling/trajectories/NeutronTracks/set proton magenta
+
+# Accumulate tracks from multiple events
+/vis/scene/endOfEventAction accumulate 50
+
+# Fire 50 neutrons and see the beam pattern
+/run/beamOn 50
+
+# --- Export top-down view ---
+/vis/ogl/export NESSA_beam_topview.png
+
+# --- Switch to 3D perspective ---
+/vis/viewer/set/viewpointThetaPhi 30 30
+/vis/viewer/zoom 1.0
+/vis/ogl/export NESSA_beam_3D.png
+
+# --- Side view (shows vertical distribution) ---
+/vis/viewer/set/viewpointThetaPhi 90 0
+/vis/viewer/set/upVector 0 0 1
+/vis/ogl/export NESSA_beam_sideview.png
+
+# --- Zoom into collimator region ---
+/vis/viewer/set/viewpointThetaPhi 0 0
+/vis/viewer/panTo 0.15 0.25
+/vis/viewer/zoom 4
+/vis/ogl/export NESSA_collimator_zoom.png
+
+#============================================================================
+# METHOD 2: VRML export (for external 3D viewers / PowerPoint 3D)
+# Open .wrl in MeshLab, Blender, or import into PowerPoint
+#============================================================================
+# Uncomment the following to export VRML:
+# /vis/open VRML2FILE
+# /vis/drawVolume
+# /vis/scene/add/trajectories smooth
+# /vis/scene/endOfEventAction accumulate 50
+# /run/beamOn 50
+# /vis/viewer/flush
+
+#============================================================================
+# METHOD 3: DAWN raytracer (publication quality)
+# Requires DAWN renderer installed
+#============================================================================
+# Uncomment for DAWN:
+# /vis/open DAWNFILE
+# /vis/drawVolume
+# /vis/scene/add/trajectories smooth
+# /vis/scene/endOfEventAction accumulate 30
+# /run/beamOn 30
+# /vis/viewer/flush

@@ -1,0 +1,38 @@
+#============================================================================
+# gps_source.mac
+# NESSA D-T Neutron Generator Source Definition
+# Converted from PHITS [Source] section
+#
+# Source characteristics:
+#   - 14 MeV D-T neutrons (Gaussian energy, FWHM = 50 keV)
+#   - Flat disk source: R_inner=0.001cm, R_outer=1.0cm
+#   - Position: (60, -140, 0) cm  [PHITS coordinates preserved]
+#   - Angular distribution: Isotropic (4pi)
+#
+# Modify this file to change source parameters without recompiling.
+#============================================================================
+
+# --- Particle type ---
+/gps/particle neutron
+
+# --- Source geometry: flat circular disk ---
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/centre 60.0 -140.0 0.0 cm
+/gps/pos/radius 1.0 cm
+# Note: GPS doesn't directly support inner radius for Plane/Circle.
+# The 0.001 cm inner radius in PHITS is negligible; effectively a disk.
+
+# --- Angular distribution: isotropic (4pi) ---
+# PHITS: dir = all (isotropic emission)
+/gps/ang/type iso
+
+# --- Energy distribution: Gaussian ---
+# PHITS: e-type=2, eg0=14.0 MeV, eg1=0.050 MeV FWHM
+# GPS uses sigma, not FWHM: sigma = FWHM / (2*sqrt(2*ln(2))) = 0.050/2.355 = 0.02123 MeV
+# Energy bounded between 13.8 and 14.7 MeV (PHITS eg2, eg3)
+/gps/ene/type Gauss
+/gps/ene/mono 14.0 MeV
+/gps/ene/sigma 0.02123 MeV
+/gps/ene/min 13.8 MeV
+/gps/ene/max 14.7 MeV

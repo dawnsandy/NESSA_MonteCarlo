@@ -1,0 +1,14 @@
+#============================================================================
+# init_vis.mac
+# Initialization macro for interactive visualization mode
+# Usage: ./nessa_sim  (no arguments = interactive mode)
+#============================================================================
+
+# Initialize the run
+/run/initialize
+
+# Load source definition
+/control/execute macros/gps_source.mac
+
+# Initialize visualization
+/control/execute macros/vis.mac

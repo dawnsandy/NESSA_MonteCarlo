@@ -1,0 +1,31 @@
+#============================================================================
+# detectors.mac - Define additional scoring detector positions
+#
+# Default 22 detectors (Dtctr1-20, DtcIn1, DtcIn2) are loaded automatically.
+# Use this macro to add extra positions or remove unneeded ones.
+#
+# Format: /nessa/detector/add name x(cm) y(cm) z(cm) radius(cm)
+#
+# Coordinates match PHITS convention:
+#   Source at (60, -140, 0) cm
+#   Collimator from y=-115 to y=-75 at x=60
+#   Beamline along Y-axis at x=60
+#============================================================================
+
+# --- Outside bunker dose points ---
+/nessa/detector/add OutRight   250 -100 0 5.0
+/nessa/detector/add OutLeft   -250 -100 0 5.0
+/nessa/detector/add OutFront    60  370 0 5.0
+/nessa/detector/add OutBack     60 -370 0 5.0
+/nessa/detector/add AboveRoof   60 -100 170 5.0
+
+# --- Lab area points ---
+/nessa/detector/add Lab_door    80  300 0 5.0
+/nessa/detector/add Lab_hall   120  350 0 5.0
+
+# --- Uncomment to remove defaults you don't need ---
+# /nessa/detector/remove Dtctr18
+# /nessa/detector/remove Dtctr19
+
+# --- Verify ---
+/nessa/detector/list

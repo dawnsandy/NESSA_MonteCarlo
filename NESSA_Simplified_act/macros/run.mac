@@ -1,0 +1,39 @@
+#============================================================================
+# run.mac - NESSA batch run with activation tracking
+#============================================================================
+/control/verbose 0
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+/run/initialize
+
+#============================================================================
+# DETECTOR CONFIGURATION
+# The default 22 detectors from PHITS are loaded automatically.
+# Uncomment lines below to add custom detectors or remove defaults.
+#
+# Format: /nessa/detector/add name x(cm) y(cm) z(cm) radius(cm)
+#
+# Examples:
+# /nessa/detector/add OutsideRight 250 0 0 5.0
+# /nessa/detector/add RoofAbove 0 -100 170 5.0
+# /nessa/detector/remove Dtctr20
+#
+# List current detectors:
+/nessa/detector/list
+#============================================================================
+
+# Load source
+/control/execute macros/gps_source.mac
+
+# Reproducibility
+/random/setSeeds 12345 67890
+/run/printProgress 100000
+
+#============================================================================
+# Quick test:    /run/beamOn 100000     (~1 min)
+# Medium stats:  /run/beamOn 1000000    (~10 min)
+# Production:    /run/beamOn 10000000   (~hours)
+#============================================================================
+/run/beamOn 1000000
