@@ -1,0 +1,63 @@
+# ============================================================
+# NESSA Bunker - Visualization Settings
+# Geometry is already initialized from main.cc
+# ============================================================
+
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+
+# Draw geometry in wireframe so you see through walls
+/vis/drawVolume
+/vis/viewer/set/style wireframe
+
+# --- Camera: look at bunker from above-right ---
+/vis/viewer/set/viewpointThetaPhi 50 25 deg
+/vis/viewer/set/targetPoint 1.95 3.71 1.50 m
+/vis/viewer/zoom 4.0
+
+# Cutaway: slice through Y=371 cm (source plane)
+/vis/viewer/addCutawayPlane 0 3.71 0 m 0 -1 0
+
+# Coordinate axes at source (50 cm long)
+/vis/scene/add/axes 1.95 3.71 1.50 m 0.5 m
+
+# --- Geometry labels at key positions ---
+/vis/scene/add/text 1.95 3.71 1.55 m 12 0 0 DT-Source
+/vis/scene/add/text 1.95 3.90 1.55 m 10 0 0 Collimator-In
+/vis/scene/add/text 1.95 4.20 1.55 m 10 0 0 Collimator-Out
+/vis/scene/add/text 1.95 5.33 1.55 m 10 0 0 HVS
+/vis/scene/add/text 1.95 6.35 1.55 m 10 0 0 Labyrinth-Out
+/vis/scene/add/text 0.85 3.80 2.15 m 10 0 0 FissionChamber
+
+# --- Trajectory drawing with particle ID colors ---
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 2
+/vis/modeling/trajectories/drawByParticleID-0/set neutron cyan
+/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+/vis/modeling/trajectories/drawByParticleID-0/set proton red
+/vis/modeling/trajectories/drawByParticleID-0/set e- yellow
+/vis/modeling/trajectories/drawByParticleID-0/set alpha magenta
+
+# Show step points and hits
+/vis/scene/add/hits
+
+# Accumulate events
+/vis/scene/endOfEventAction accumulate
+
+# Event label
+/vis/scene/add/eventID
+
+# Re-enable auto refresh
+/vis/viewer/set/autoRefresh true
+/vis/verbose warnings
+
+# --- Useful interactive commands ---
+# Switch to solid view:     /vis/viewer/set/style surface
+# Remove cutaway:           /vis/viewer/clearCutawayPlanes
+# New cutaway at Z=150:     /vis/viewer/addCutawayPlane 0 0 1.50 m 0 0 -1
+# Zoom in/out:              /vis/viewer/zoom 2 or /vis/viewer/zoom 0.5
+# Rotate view:              /vis/viewer/set/viewpointThetaPhi 90 0
+# Show specific volume:     /vis/geometry/set/visibility logic_c1300 0 true
+# Fire neutrons:            /run/beamOn 50

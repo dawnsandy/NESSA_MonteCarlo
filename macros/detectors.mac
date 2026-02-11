@@ -1,0 +1,20 @@
+# ============================================================
+# NESSA Detector Configuration
+# Define scoring point detectors here.
+# Format: /nessa/detector/add name x(cm) y(cm) z(cm) radius(cm)
+#
+# The default 20 detectors are already loaded.
+# Use this file to ADD extra detectors or DISABLE unwanted ones.
+# ============================================================
+
+# --- Example: add a custom detector ---
+# /nessa/detector/add MyDetector 200 500 150 3.0
+
+# --- Example: disable a default detector ---
+# /nessa/detector/disable Lab_exit
+
+# --- Example: remove a detector entirely ---
+# /nessa/detector/remove OutsideFront
+
+# --- List all configured detectors ---
+/nessa/detector/list

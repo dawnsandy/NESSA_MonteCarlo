@@ -1,0 +1,5 @@
+# NESSA Visualization init
+# /run/initialize already called in main.cc
+
+/vis/open OGL 1200x900-0+0
+/control/execute macros/vis.mac

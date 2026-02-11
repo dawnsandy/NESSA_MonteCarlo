@@ -1,0 +1,27 @@
+# ============================================================
+# NESSA Scoring Configuration
+# Optional mesh tallies for dose maps (in addition to point detectors)
+# Uncomment to enable - WARNING: large meshes are slow
+# ============================================================
+
+# --- Neutron dose XY map at Z=150 cm (beam height) ---
+# /score/create/boxMesh mesh_n_xy
+# /score/mesh/boxSize 1380. 3350. 90. cm
+# /score/mesh/translate/xyz 300. -250. 90. cm
+# /score/mesh/nBin 69 167 1
+# /score/quantity/doseDeposit nDose
+# /score/filter/particle nFilter neutron
+# /score/close
+
+# --- Photon dose XY map at Z=150 cm ---
+# /score/create/boxMesh mesh_g_xy
+# /score/mesh/boxSize 1380. 3350. 90. cm
+# /score/mesh/translate/xyz 300. -250. 90. cm
+# /score/mesh/nBin 69 167 1
+# /score/quantity/doseDeposit gDose
+# /score/filter/particle gFilter gamma
+# /score/close
+
+# Dump after run with:
+# /score/dumpAllQuantitiesToFile mesh_n_xy neutron_dose_xy.csv
+# /score/dumpAllQuantitiesToFile mesh_g_xy photon_dose_xy.csv

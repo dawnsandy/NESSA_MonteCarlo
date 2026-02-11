@@ -1,0 +1,23 @@
+# ============================================================
+# NESSA Bunker - Batch Run
+# Output: nessa_output.root (or .csv depending on Geant4 build)
+#   - Neutron/photon spectra and dose at 20 detector positions
+#   - Ar-41 production map and activity estimate
+# ============================================================
+
+/control/verbose 0
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Load detector configuration (add/remove detectors here)
+/control/execute macros/detectors.mac
+
+# ============================================================
+# Run: adjust number for statistics
+#   1000     = quick test (~seconds)
+#   100000   = moderate (~minutes)
+#   1500000  = good stats (~hours)
+#   15000000 = full MCNP equivalent
+# ============================================================
+/run/beamOn 100000
